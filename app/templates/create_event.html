@@ -1,12 +1,28 @@
 {% extends "base.html" %}{% block content %}
-<h2>New Event</h2><form method="post" enctype="multipart/form-data" class="col-md-6">
-<input class="form-control mb-2" name="title" placeholder="Event title" required>
-<textarea class="form-control mb-2" name="description" placeholder="Description"></textarea>
-<select class="form-control mb-2" name="category"><option value="tech">Tech</option><option value="cultural">Cultural</option><option value="sports">Sports</option><option value="workshop">Workshop</option></select>
-<input class="form-control mb-2" name="date" placeholder="2026-10-15 10:00" required>
-<input class="form-control mb-2" name="venue" placeholder="Venue">
-<div class="row"><div class="col"><input class="form-control mb-2" type="number" name="capacity" value="100"></div>
-<div class="col"><input class="form-control mb-2" type="number" step="0.01" name="fee" value="0"></div></div>
-<input class="form-control mb-2" name="deadline" placeholder="Deadline">
-<label>Poster (jpg/png, 2MB):</label><input class="form-control mb-2" type="file" name="poster" accept=".jpg,.jpeg,.png">
-<button class="btn btn-success">Create - Ho gaya!</button></form>{% endblock %}
+<h2>{% if e %}Edit Event #{{e.id}}{% else %}➕ New Event{% endif %}</h2>
+<form method="post" enctype="multipart/form-data" class="col-md-8">
+<div class="card p-3 mb-3"><h5>Basic</h5>
+<input class="form-control mb-2" name="title" placeholder="Event title *" value="{{e.title if e}}" required>
+<textarea class="form-control mb-2" name="description" rows="3" placeholder="Description">{{e.description if e}}</textarea>
+<div class="row"><div class="col"><label>Category</label>
+<select class="form-control mb-2" name="category">{% for c in ['tech','cultural','sports','workshop'] %}<option value="{{c}}" {% if e and e.category==c %}selected{% endif %}>{{c}}</option>{% endfor %}</select></div>
+<div class="col"><label>Mode</label><select class="form-control mb-2" name="mode">{% for m in ['offline','online','hybrid'] %}<option {% if e and e.mode==m %}selected{% endif %}>{{m}}</option>{% endfor %}</select></div>
+<div class="col"><label>Type</label><select class="form-control mb-2" name="event_type">{% for t in ['solo','team'] %}<option {% if e and e.event_type==t %}selected{% endif %}>{{t}}</option>{% endfor %}</select></div></div>
+</div>
+<div class="card p-3 mb-3"><h5>📅 Venue & Time</h5>
+<div class="row"><div class="col"><label>Date/Time *</label><input class="form-control mb-2" name="date" value="{{e.date if e}}" placeholder="2026-10-15 10:00" required></div>
+<div class="col"><label>Venue</label><input class="form-control mb-2" name="venue" value="{{e.venue if e}}" placeholder="Main Auditorium"></div></div>
+<div class="row"><div class="col"><label>Capacity</label><input class="form-control mb-2" type="number" name="capacity" value="{{e.capacity if e else 100}}"></div>
+<div class="col"><label>Fee ₹</label><input class="form-control mb-2" type="number" step="0.01" name="fee" value="{{e.fee if e else 0}}"></div>
+<div class="col"><label>Team Max</label><input class="form-control mb-2" type="number" name="team_max" value="{{e.team_max if e else 1}}"></div></div>
+<label>Deadline</label><input class="form-control mb-2" name="deadline" value="{{e.deadline if e}}" placeholder="2026-10-14 23:59">
+</div>
+<div class="card p-3 mb-3"><h5>📝 Extra details</h5>
+<label>Rules</label><textarea class="form-control mb-2" name="rules" rows="2" placeholder="1. ID card lao...">{{e.rules if e}}</textarea>
+<div class="row"><div class="col"><label>Prizes 🏆</label><input class="form-control mb-2" name="prizes" value="{{e.prizes if e}}" placeholder="Winner ₹5000"></div>
+<div class="col"><label>Contact 📞</label><input class="form-control mb-2" name="contact" value="{{e.contact if e}}" placeholder="98765... / org@college.edu"></div></div>
+<label>Poster (jpg/png, 2MB)</label><input class="form-control mb-2" type="file" name="poster" accept=".jpg,.jpeg,.png">
+{% if e and e.poster %}<small>Current: {{e.poster}}</small>{% endif %}
+</div>
+<button class="btn btn-success btn-lg">{% if e %}Update{% else %}Create{% endif %} - Ho gaya! ✅</button>
+<a href="/admin/" class="btn btn-secondary">Back</a></form>{% endblock %}

@@ -1,14 +1,28 @@
 {% extends "base.html" %}{% block content %}
-<h2>{{e.title}}</h2>
-{% if e.poster %}<img src="{{ url_for('static', filename='uploads/'+e.poster) }}" class="img-fluid rounded mb-3" style="max-height:300px">{% endif %}
-<p><span class="badge badge-cat-{{e.category}}">{{e.category}}</span> | {{e.date}} | {{e.venue}} | Fee ₹{{e.fee}} | Seats left {{e.seats_left}}</p>
+<div class="row"><div class="col-md-8">
+<h2>{{e.title}} {% if e.status=='closed' %}<span class="badge bg-danger">Closed</span>{% else %}<span class="badge bg-success">Open</span>{% endif %}</h2>
+{% if e.poster %}<img src="{{ url_for('static', filename='uploads/'+e.poster) }}" class="img-fluid rounded mb-3" style="max-height:320px">{% endif %}
+<p><span class="badge badge-cat-{{e.category}}">{{e.category}}</span>
+<span class="badge bg-dark">{{e.mode}}</span> <span class="badge bg-info">{{e.event_type}}{% if e.event_type=='team' %} (max {{e.team_max}}){% endif %}</span></p>
+<div class="card p-3 mb-3"><div class="row text-center">
+<div class="col">📅<br><b>{{e.date}}</b><br><small>{{e.venue}}</small></div>
+<div class="col">🎟️<br><b>{{e.seats_left}}/{{e.capacity}}</b><br><small>seats left</small></div>
+<div class="col">💰<br><b>{% if e.fee==0 %}FREE{% else %}₹{{e.fee}}{% endif %}</b><br><small>{% if e.deadline %}till {{e.deadline}}{% endif %}</small></div>
+</div>
+<div class="progress mt-2"><div class="progress-bar" style="width:{{ (e.registered_count*100//e.capacity) if e.capacity else 0 }}%"></div></div></div>
 <p>{{e.description}}</p>
-{% if mine %}<div class="alert alert-success">Registered! QR: <b>{{mine.qr_token}}</b> | Payment: {{mine.payment}} <a href="/ticket/{{mine.qr_token}}">View Ticket</a>
-{% if mine.attended %}<a href="/certificate/{{mine.qr_token}}" class="btn btn-sm btn-warning ms-2">Download Certificate</a>{% endif %}</div>
+{% if e.rules %}<div class="card p-3 mb-2"><h6>📜 Rules</h6><p style="white-space:pre-line">{{e.rules}}</p></div>{% endif %}
+{% if e.prizes or e.contact %}<p>🏆 <b>{{e.prizes}}</b> | 📞 {{e.contact}}</p>{% endif %}
+<button class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText(location.href);alert('Link copy Ho gaya!')">🔗 Share</button>
+</div><div class="col-md-4"><div class="card p-3">
+<h5>Register</h5>
+{% if mine %}<div class="alert alert-success">Done! QR: <b>{{mine.qr_token}}</b> | {{mine.payment}}<br><a href="/ticket/{{mine.qr_token}}" class="btn btn-sm btn-primary mt-2">Ticket</a>
+{% if mine.attended %}<a href="/certificate/{{mine.qr_token}}" class="btn btn-sm btn-warning mt-2">Certificate</a>{% endif %}</div>
+{% elif e.status=='closed' %}<div class="alert alert-danger">Registration closed!</div>
 {% elif current_user.is_authenticated %}
 <form method="post" action="/event/{{e.id}}/register">
-<input class="form-control mb-2" name="team" placeholder="Team members (comma, optional)">
-{% if e.fee > 0 %}<input class="form-control mb-2" name="upi_ref" placeholder="UPI Ref ID (e.g. 123456789) - fee ₹{{e.fee}}"><small class="text-muted">Pay on college UPI then enter ref. Razorpay Phase-2 me auto hoga.</small>{% endif %}
-<button class="btn btn-success mt-2">Register Now</button></form>
-{% else %}<a href="/login" class="btn btn-primary">Login to Register</a>{% endif %}
-{% endblock %}
+{% if e.event_type=='team' %}<input class="form-control mb-2" name="team" placeholder="Team members (max {{e.team_max}}, comma)">{% else %}<input type="hidden" name="team" value="">{% endif %}
+{% if e.fee>0 %}<input class="form-control mb-2" name="upi_ref" placeholder="UPI Ref ID - ₹{{e.fee}}">{% endif %}
+<button class="btn btn-success w-100">Register Now ✅</button></form>
+{% else %}<a href="/login" class="btn btn-primary w-100">Login to Register</a>{% endif %}
+</div></div></div>{% endblock %}

@@ -14,6 +14,13 @@ class Event(db.Model):
     deadline = db.Column(db.String(30), default="")
     poster = db.Column(db.String(200), default="")
     status = db.Column(db.String(20), default="open")  # open|closed
+    # Small-small details - Bilkul!
+    mode = db.Column(db.String(20), default="offline")  # online|offline|hybrid
+    event_type = db.Column(db.String(20), default="solo")  # solo|team
+    team_max = db.Column(db.Integer, default=1)
+    rules = db.Column(db.Text, default="")
+    prizes = db.Column(db.String(200), default="")
+    contact = db.Column(db.String(100), default="")  # phone / email
     organizer_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 

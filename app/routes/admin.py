@@ -28,35 +28,84 @@ def panel():
     evts = Event.query.order_by(Event.id.desc()).all()
     return render_template("admin.html", events=evts)
 
+def save_poster(f):
+    """Poster save helper - Bilkul!"""
+    if not f or not f.filename:
+        return ""
+    ext = f.filename.rsplit(".", 1)[-1].lower() if "." in f.filename else ""
+    if ext not in current_app.config["ALLOWED_EXT"]:
+        return ""
+    import time
+    name = f"{int(time.time())}_{secure_filename(f.filename)}"
+    f.save(os.path.join(current_app.config["UPLOAD_FOLDER"], name))
+    return name
+
+def fill_event(e, form):
+    e.title = form.get("title", e.title)
+    e.description = form.get("description", "")
+    e.category = form.get("category", "tech")
+    e.date = form.get("date", "")
+    e.venue = form.get("venue", "Main Auditorium")
+    e.capacity = int(form.get("capacity", 100) or 100)
+    e.fee = float(form.get("fee", 0) or 0)
+    e.deadline = form.get("deadline", "")
+    e.mode = form.get("mode", "offline")
+    e.event_type = form.get("event_type", "solo")
+    e.team_max = int(form.get("team_max", 1) or 1)
+    e.rules = form.get("rules", "")
+    e.prizes = form.get("prizes", "")
+    e.contact = form.get("contact", "")
+    return e
+
 @admin_bp.route("/event/new", methods=["GET", "POST"])
 @role_required("admin", "organizer")
 def new_event():
     if request.method == "POST":
-        # Poster upload - Bilkul!
-        poster_name = ""
-        f = request.files.get("poster")
-        if f and f.filename:
-            ext = f.filename.rsplit(".", 1)[-1].lower()
-            if ext in current_app.config["ALLOWED_EXT"]:
-                poster_name = secure_filename(f.filename)
-                f.save(os.path.join(current_app.config["UPLOAD_FOLDER"], poster_name))
-        e = Event(
-            title=request.form.get("title"),
-            description=request.form.get("description", ""),
-            category=request.form.get("category", "tech"),
-            date=request.form.get("date", ""),
-            venue=request.form.get("venue", "Main Auditorium"),
-            capacity=int(request.form.get("capacity", 100)),
-            fee=float(request.form.get("fee", 0)),
-            deadline=request.form.get("deadline", ""),
-            poster=poster_name,
-            organizer_id=current_user.id,
-        )
+        title = request.form.get("title", "").strip()
+        if not title:
+            flash("Title to dalo bro!", "danger")
+            return redirect(url_for("admin.new_event"))
+        e = Event(title=title, organizer_id=current_user.id)
+        e = fill_event(e, request.form)
+        e.poster = save_poster(request.files.get("poster"))
         db.session.add(e)
         db.session.commit()
-        flash("Event create Ho gaya with poster!", "success")
+        flash(f"Event create Ho gaya! ID #{e.id}", "success")
         return redirect(url_for("admin.panel"))
-    return render_template("create_event.html")
+    return render_template("create_event.html", e=None)
+
+@admin_bp.route("/event/<int:eid>/edit", methods=["GET", "POST"])
+@role_required("admin", "organizer")
+def edit_event(eid):
+    e = Event.query.get_or_404(eid)
+    if request.method == "POST":
+        e = fill_event(e, request.form)
+        new_poster = save_poster(request.files.get("poster"))
+        if new_poster:
+            e.poster = new_poster
+        db.session.commit()
+        flash("Event update Ho gaya!", "success")
+        return redirect(url_for("admin.view_event", eid=eid))
+    return render_template("create_event.html", e=e)
+
+@admin_bp.route("/event/<int:eid>/toggle")
+@role_required("admin", "organizer")
+def toggle_event(eid):
+    e = Event.query.get_or_404(eid)
+    e.status = "closed" if e.status == "open" else "open"
+    db.session.commit()
+    flash(f"Event {e.status} kar diya!", "info")
+    return redirect(url_for("admin.panel"))
+
+@admin_bp.route("/event/<int:eid>/delete", methods=["POST"])
+@role_required("admin", "organizer")
+def delete_event(eid):
+    e = Event.query.get_or_404(eid)
+    Registration.query.filter_by(event_id=eid).delete()
+    db.session.delete(e)
+    db.session.commit()
+    flash("Event delete Ho gaya!", "warning")
+    return redirect(url_for("admin.panel"))
 
 @admin_bp.route("/event/<int:eid>")
 @role_required("admin", "organizer")
