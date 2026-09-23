@@ -10,9 +10,22 @@ def make_qr(token):
     return path
 
 def send_mail_safe(to, sub, body):
-    # MVP: console print, prod me Flask-Mail
-    print(f"[MAIL to={to}] {sub}: {body}")
-    return True
+    # Try real SMTP, fallback console - Bilkul!
+    import os, smtplib
+    from email.mime.text import MIMEText
+    user, pwd = os.environ.get("MAIL_USERNAME", ""), os.environ.get("MAIL_PASSWORD", "")
+    if not user or not pwd:
+        print(f"[MAIL to={to}] {sub}: {body}")
+        return True
+    try:
+        msg = MIMEText(body)
+        msg["Subject"], msg["From"], msg["To"] = sub, user, to
+        with smtplib.SMTP("smtp.gmail.com", 587, timeout=10) as s:
+            s.starttls(); s.login(user, pwd); s.send_message(msg)
+        return True
+    except Exception as ex:
+        print("mail err:", ex, f"[fallback MAIL to={to}] {sub}")
+        return True
 
 def export_csv(event_id):
     """Excel/CSV export - pandas nahi to csv fallback"""

@@ -1,22 +1,33 @@
-<!-- base layout - Bootstrap 5 -->
+<!-- Pro layout - Bootstrap 5 + custom theme -->
 <!doctype html><html><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>College Events</title>
+<title>{% block title %}College Events{% endblock %}</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head><body>
-<nav class="navbar navbar-dark bg-dark navbar-expand"><div class="container">
-<a class="navbar-brand" href="/">🎓 College Events</a>
-<div class="navbar-nav ms-auto">
-<a class="nav-link" href="/events">Events</a>
+<nav class="navbar navbar-dark navbar-expand-lg pro-nav"><div class="container">
+<a class="navbar-brand fw-bold" href="/">🎓 College Events</a>
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nv"><span class="navbar-toggler-icon"></span></button>
+<div class="collapse navbar-collapse" id="nv"><div class="navbar-nav ms-auto">
+<a class="nav-link" href="/events"><i class="bi bi-grid"></i> Events</a>
 {% if current_user.is_authenticated %}
-<a class="nav-link" href="/dashboard">Dashboard</a>
-{% if current_user.role in ['admin','organizer'] %}<a class="nav-link" href="/admin/">Admin</a>{% endif %}
-<a class="nav-link" href="/logout">Logout ({{current_user.name}})</a>
-{% else %}<a class="nav-link" href="/login">Login</a><a class="nav-link" href="/register">Register</a>{% endif %}
-</div></div></nav>
+<a class="nav-link" href="/dashboard"><i class="bi bi-ticket"></i> My Tickets</a>
+{% if current_user.role in ['admin','organizer'] %}
+<a class="nav-link" href="/admin/">Admin</a>
+<a class="nav-link" href="/admin/analytics">Analytics</a>
+<a class="nav-link" href="/admin/scanner">Scanner</a>
+{% endif %}
+<a class="nav-link btn btn-sm btn-outline-light ms-2" href="/logout">Logout ({{current_user.name}})</a>
+{% else %}<a class="nav-link" href="/login">Login</a><a class="nav-link btn btn-sm btn-warning ms-2" href="/register">Join Free</a>{% endif %}
+</div></div></div></nav>
 <div class="container mt-3">
 {% with m=get_flashed_messages(with_categories=true) %}{% if m %}{% for c,t in m %}
-<div class="alert alert-{{c}}">{{t}}</div>{% endfor %}{% endif %}{% endwith %}
+<div class="alert alert-{{c}} alert-dismissible fade show">{{t}}<button class="btn-close" data-bs-dismiss="alert"></button></div>{% endfor %}{% endif %}{% endwith %}
 {% block content %}{% endblock %}</div>
+<footer class="text-center text-muted py-4 mt-5 border-top">Made with ❤️ Flask | VICTUS AI | 2026</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
 </body></html>

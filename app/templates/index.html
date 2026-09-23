@@ -1,12 +1,16 @@
 {% extends "base.html" %}{% block content %}
-<div class="p-5 bg-light rounded"><h1>College Event Registration 🎉</h1>
-<p>Tech | Cultural | Sports - ek link pe sab register!</p>
-<a href="/events" class="btn btn-primary">Browse Events</a>
-<a href="/register" class="btn btn-outline-success">Join Now</a></div>
-<h3 class="mt-4">Latest Events</h3><div class="row">
-{% for e in events %}<div class="col-md-4"><div class="card mb-3"><div class="card-body">
-<h5>{{e.title}}</h5><small>{{e.category}} | {{e.date}} | {{e.venue}}</small>
-<p>Seats left: <b>{{e.seats_left}}</b> | Fee: ₹{{e.fee}}</p>
-<a href="/event/{{e.id}}" class="btn btn-sm btn-primary">View</a>
+<div class="hero mb-4"><h1>College Event Registration 🎉</h1>
+<p>Tech | Cultural | Sports | Workshop - ek link pe sab register, QR ticket + certificate!</p>
+<a href="/events" class="btn btn-light btn-lg">Browse Events</a>
+<a href="/register" class="btn btn-warning btn-lg">Join Free</a></div>
+<div class="mb-3"><input id="liveSearch" class="form-control searchbar" placeholder="🔍 Live search events..."></div>
+<h3>Latest Events</h3><div class="row">
+{% for e in events %}<div class="col-md-4 event-card"><div class="card mb-3">
+{% if e.poster %}<img class="poster" src="{{ url_for('static', filename='uploads/'+e.poster) }}">{% endif %}
+<div class="card-body">
+<span class="badge badge-cat-{{e.category}}">{{e.category}}</span>
+<h5 class="mt-2">{{e.title}}</h5><small>{{e.date}} | {{e.venue}}</small>
+<p>Seats: <b>{{e.seats_left}}</b>/{{e.capacity}} | Fee: ₹{{e.fee}}</p>
+<a href="/event/{{e.id}}" class="btn btn-sm btn-primary">View + Register</a>
 </div></div></div>{% endfor %}</div>
 {% endblock %}

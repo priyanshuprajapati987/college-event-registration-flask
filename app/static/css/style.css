@@ -1,2 +1,10 @@
-body { background: #f6f7fb; }
-.card { border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+/* Pro theme - Bilkul! */
+body { background: linear-gradient(180deg,#f6f7fb,#eef2ff); min-height:100vh; }
+.pro-nav { background: linear-gradient(90deg,#1a1a2e,#16213e,#0f3460) !important; box-shadow:0 2px 12px rgba(0,0,0,.2); }
+.card { border:0; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); transition:transform .15s; overflow:hidden; }
+.card:hover { transform:translateY(-3px); }
+.hero { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border-radius:20px; padding:3rem; }
+.poster { height:160px; object-fit:cover; width:100%; background:#ddd; }
+.badge-cat-tech{background:#0d6efd}.badge-cat-cultural{background:#fd7e14}.badge-cat-sports{background:#198754}.badge-cat-workshop{background:#6f42c1}
+.searchbar{max-width:500px}
+.qr-box{border:2px dashed #667eea; border-radius:16px;}

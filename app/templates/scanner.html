@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<h2>📷 QR Scanner (Gate Check-in)</h2>
+<div class="card p-4 col-md-6 qr-box">
+<p>Paste QR token ya CHECKIN:token (camera Phase-2 me):</p>
+<form onsubmit="go(event)"><input id="qr" class="form-control mb-2" placeholder="e.g. a1b2c3d4...">
+<button class="btn btn-success">Check-in ✅</button></form>
+<p class="mt-2 text-muted">Mobile camera ke liye Phase-2 me html5-qrcode add karenge.</p></div>
+{% endblock %}{% block scripts %}<script>
+function go(e){e.preventDefault();let v=qr.value.replace('CHECKIN:','').trim();if(v)location.href='/admin/checkin/'+v;}
+</script>{% endblock %}

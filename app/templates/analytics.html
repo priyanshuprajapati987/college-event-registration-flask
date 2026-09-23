@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<h2>📊 Analytics</h2>
+<div class="row mb-3"><div class="col"><div class="card p-3 text-center"><h3>{{total_users}}</h3><small>Users</small></div></div>
+<div class="col"><div class="card p-3 text-center"><h3>{{total_regs}}</h3><small>Registrations</small></div></div>
+<div class="col"><div class="card p-3 text-center"><h3>{{evts|length}}</h3><small>Events</small></div></div></div>
+<div class="row"><div class="col-md-6"><div class="card p-3"><canvas id="c1"></canvas></div></div>
+<div class="col-md-6"><div class="card p-3"><canvas id="c2"></canvas></div></div></div>
+{% endblock %}{% block scripts %}<script>
+new Chart(c1,{type:'bar',data:{labels:{{labels|tojson}},datasets:[{label:'Registrations',data:{{counts|tojson}}},{label:'Attended',data:{{attended|tojson}}}]}});
+new Chart(c2,{type:'doughnut',data:{labels:{{cats.keys()|list|tojson}},datasets:[{data:{{cats.values()|list|tojson}}}]}});
+</script>{% endblock %}
