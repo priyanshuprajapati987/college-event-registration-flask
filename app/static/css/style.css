@@ -1,5 +1,11 @@
-/* Pro theme - Bilkul! */
+/* Pro theme + dark - Bilkul! */
 body { background: linear-gradient(180deg,#f6f7fb,#eef2ff); min-height:100vh; }
+[data-bs-theme="dark"] body, [data-bs-theme="dark"] { background: linear-gradient(180deg,#0f0f1a,#1a1a2e) !important; color:#e8e8e8; }
+[data-bs-theme="dark"] .card { background:#1e1e2f !important; color:#e8e8e8; border:1px solid #333; }
+[data-bs-theme="dark"] .hero { background:linear-gradient(135deg,#2d1b4e,#0f3460); }
+[data-bs-theme="dark"] .table { --bs-table-bg:transparent; --bs-table-color:#e8e8e8; }
+[data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] select { background:#2a2a3e !important; color:#fff !important; border-color:#444; }
+[data-bs-theme="dark"] footer { color:#aaa !important; border-color:#333 !important; }
 .pro-nav { background: linear-gradient(90deg,#1a1a2e,#16213e,#0f3460) !important; box-shadow:0 2px 12px rgba(0,0,0,.2); }
 .card { border:0; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); transition:transform .15s; overflow:hidden; }
 .card:hover { transform:translateY(-3px); }
