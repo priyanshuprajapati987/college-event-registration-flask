@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<h2>Registrations - {{e.title}}</h2>
+<table class="table table-bordered"><tr><th>Reg</th><th>User</th><th>Team</th><th>QR</th><th>Attended</th><th>Action</th></tr>
+{% for r in regs %}{% set u=users[r.user_id] %}
+<tr><td>{{r.id}}</td><td>{{u.name if u}} ({{u.roll_no if u}})</td><td>{{r.team}}</td><td><small>{{r.qr_token}}</small></td><td>{{r.attended}}</td>
+<td><form method="post" action="/admin/checkin/{{r.qr_token}}"><button class="btn btn-sm btn-success">Check-in</button></form></td></tr>
+{% endfor %}</table>{% endblock %}

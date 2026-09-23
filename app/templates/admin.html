@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block content %}
+<h2>Admin Panel</h2><a href="/admin/event/new" class="btn btn-success mb-2">+ New Event</a>
+<table class="table table-bordered"><tr><th>ID</th><th>Title</th><th>Date</th><th>Seats</th><th>Action</th></tr>
+{% for e in events %}<tr><td>{{e.id}}</td><td>{{e.title}}</td><td>{{e.date}}</td><td>{{e.registered_count}}/{{e.capacity}}</td>
+<td><a href="/admin/event/{{e.id}}" class="btn btn-sm btn-info">View</a>
+<a href="/admin/event/{{e.id}}/export" class="btn btn-sm btn-secondary">Excel</a></td></tr>{% endfor %}</table>{% endblock %}

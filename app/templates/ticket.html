@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block content %}
+<div class="text-center border p-4"><h2>🎟️ {{e.title}}</h2><p>{{r.qr_token}}</p>
+<img src="{{ url_for('static', filename='qr/'+r.qr_token+'.png') }}" width="200" onerror="this.remove()">
+<p>Gate pe ye QR dikhao bro!</p></div>{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<h2>Register</h2><form method="post" class="col-md-6">
+<input class="form-control mb-2" name="name" placeholder="Full name" required>
+<input class="form-control mb-2" name="email" placeholder="college email" required>
+<input class="form-control mb-2" type="password" name="password" placeholder="password" required>
+<div class="row"><div class="col"><input class="form-control mb-2" name="roll_no" placeholder="Roll no"></div>
+<div class="col"><input class="form-control mb-2" name="branch" placeholder="Branch"></div>
+<div class="col"><input class="form-control mb-2" name="year" placeholder="Year"></div></div>
+<select class="form-control mb-2" name="role"><option value="student">Student</option><option value="organizer">Organizer</option></select>
+<button class="btn btn-success">Ho gaya - Create</button></form>{% endblock %}

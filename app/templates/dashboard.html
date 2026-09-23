@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block content %}
+<h2>My Dashboard</h2><div class="row">{% for r in regs %}{% set e=ev_map[r.event_id] %}
+<div class="col-md-4"><div class="card mb-2"><div class="card-body">
+<h5>{{e.title if e}}</h5><small>QR: {{r.qr_token}} | {{r.status}} | Attended: {{r.attended}}</small><br>
+<a href="/ticket/{{r.qr_token}}" class="btn btn-sm btn-primary mt-2">Ticket</a>
+</div></div></div>{% endfor %}</div>{% endblock %}

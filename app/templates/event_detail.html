@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h2>{{e.title}}</h2><p><b>{{e.category}}</b> | {{e.date}} | {{e.venue}} | Fee ₹{{e.fee}} | Seats left {{e.seats_left}}</p>
+<p>{{e.description}}</p>
+{% if mine %}<div class="alert alert-success">Registered! QR: <b>{{mine.qr_token}}</b> <a href="/ticket/{{mine.qr_token}}">View Ticket</a></div>
+{% elif current_user.is_authenticated %}
+<form method="post" action="/event/{{e.id}}/register"><input class="form-control mb-2" name="team" placeholder="Team members (comma, optional)"><button class="btn btn-success">Register Now</button></form>
+{% else %}<a href="/login" class="btn btn-primary">Login to Register</a>{% endif %}
+{% endblock %}
