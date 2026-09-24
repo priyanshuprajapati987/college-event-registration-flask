@@ -1,6 +1,5 @@
-/* Premium UI - modern college fest vibe */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:#f4f6ff; min-height:100vh; }
+/* Premium UI - modern college fest vibe (font via base.html link, v3) */
+html, body { font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif !important; background:#f4f6ff; min-height:100vh; }
 .pro-nav { background:rgba(15,15,35,.92) !important; backdrop-filter:blur(12px); box-shadow:0 4px 24px rgba(0,0,0,.25); }
 .pro-nav .navbar-brand { font-weight:800; letter-spacing:.5px; background:linear-gradient(90deg,#ffd166,#ef476f); -webkit-background-clip:text; background-clip:text; color:transparent !important; }
 .card { border:0; border-radius:20px; box-shadow:0 8px 30px rgba(30,30,80,.10); transition:transform .2s, box-shadow .2s; overflow:hidden; background:#fff; }
