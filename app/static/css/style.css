@@ -1,16 +1,32 @@
-/* Pro theme + dark - Bilkul! */
-body { background: linear-gradient(180deg,#f6f7fb,#eef2ff); min-height:100vh; }
-[data-bs-theme="dark"] body, [data-bs-theme="dark"] { background: linear-gradient(180deg,#0f0f1a,#1a1a2e) !important; color:#e8e8e8; }
-[data-bs-theme="dark"] .card { background:#1e1e2f !important; color:#e8e8e8; border:1px solid #333; }
-[data-bs-theme="dark"] .hero { background:linear-gradient(135deg,#2d1b4e,#0f3460); }
+/* Premium UI - modern college fest vibe */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:#f4f6ff; min-height:100vh; }
+.pro-nav { background:rgba(15,15,35,.92) !important; backdrop-filter:blur(12px); box-shadow:0 4px 24px rgba(0,0,0,.25); }
+.pro-nav .navbar-brand { font-weight:800; letter-spacing:.5px; background:linear-gradient(90deg,#ffd166,#ef476f); -webkit-background-clip:text; background-clip:text; color:transparent !important; }
+.card { border:0; border-radius:20px; box-shadow:0 8px 30px rgba(30,30,80,.10); transition:transform .2s, box-shadow .2s; overflow:hidden; background:#fff; }
+.card:hover { transform:translateY(-5px); box-shadow:0 16px 40px rgba(80,60,180,.18); }
+.hero { background:radial-gradient(1000px 400px at 10% 0%,#8b5cf6,transparent),radial-gradient(800px 400px at 90% 20%,#ec4899,transparent),linear-gradient(135deg,#1e1b4b,#312e81); color:#fff; border-radius:24px; padding:3.5rem; position:relative; overflow:hidden; }
+.hero h1 { font-weight:800; font-size:2.6rem; }
+.hero p { opacity:.85; font-size:1.1rem; }
+.btn { border-radius:12px; font-weight:600; }
+.btn-primary { background:linear-gradient(135deg,#6366f1,#8b5cf6); border:0; }
+.btn-success { background:linear-gradient(135deg,#10b981,#059669); border:0; }
+.btn-warning { background:linear-gradient(135deg,#f59e0b,#f97316); border:0; color:#fff; }
+.poster { height:180px; object-fit:cover; width:100%; background:linear-gradient(135deg,#ddd,#bbb); }
+.event-card .card-body { padding:1.2rem; }
+.badge { border-radius:20px; padding:.4em .8em; font-weight:700; color:#fff; }
+.badge-cat-tech{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}.badge-cat-cultural{background:linear-gradient(135deg,#f59e0b,#ef4444)}.badge-cat-sports{background:linear-gradient(135deg,#10b981,#047857)}.badge-cat-workshop{background:linear-gradient(135deg,#8b5cf6,#6d28d9)}
+.searchbar{max-width:520px; border-radius:14px; padding:.7rem 1rem; border:2px solid #e5e7eb; }
+.searchbar:focus { border-color:#8b5cf6; box-shadow:0 0 0 4px rgba(139,92,246,.15); outline:none; }
+.qr-box{border:2px dashed #8b5cf6; border-radius:20px; background:#fafaff;}
+.progress { height:10px; border-radius:10px; }
+.stat-chip { background:#fff; border-radius:16px; padding:.8rem 1.2rem; box-shadow:0 4px 14px rgba(0,0,0,.06); }
+/* dark */
+[data-bs-theme="dark"] body, [data-bs-theme="dark"] { background:#0b0b16 !important; color:#e8e8e8; }
+[data-bs-theme="dark"] .card, [data-bs-theme="dark"] .stat-chip { background:#171730 !important; color:#e8e8e8; border:1px solid #2c2c4a; }
+[data-bs-theme="dark"] .hero { background:radial-gradient(800px 300px at 10% 0%,#4c1d95,transparent),linear-gradient(135deg,#0f0f2a,#1e1b4b); }
 [data-bs-theme="dark"] .table { --bs-table-bg:transparent; --bs-table-color:#e8e8e8; }
-[data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] select { background:#2a2a3e !important; color:#fff !important; border-color:#444; }
-[data-bs-theme="dark"] footer { color:#aaa !important; border-color:#333 !important; }
-.pro-nav { background: linear-gradient(90deg,#1a1a2e,#16213e,#0f3460) !important; box-shadow:0 2px 12px rgba(0,0,0,.2); }
-.card { border:0; border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.08); transition:transform .15s; overflow:hidden; }
-.card:hover { transform:translateY(-3px); }
-.hero { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; border-radius:20px; padding:3rem; }
-.poster { height:160px; object-fit:cover; width:100%; background:#ddd; }
-.badge-cat-tech{background:#0d6efd}.badge-cat-cultural{background:#fd7e14}.badge-cat-sports{background:#198754}.badge-cat-workshop{background:#6f42c1}
-.searchbar{max-width:500px}
-.qr-box{border:2px dashed #667eea; border-radius:16px;}
+[data-bs-theme="dark"] .form-control, [data-bs-theme="dark"] select { background:#23233f !important; color:#fff !important; border-color:#3a3a5c; }
+[data-bs-theme="dark"] .searchbar { background:#23233f !important; border-color:#3a3a5c; color:#fff; }
+[data-bs-theme="dark"] footer { color:#888 !important; border-color:#222 !important; }
+[data-bs-theme="dark"] .qr-box { background:#171730; }
